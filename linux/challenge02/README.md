@@ -5,7 +5,7 @@
 
 ## Ejecucion
 
-Se debe ejecutar el archivo [challenge02.sh](/linux/challenge01/challenge02.sh)
+Los pasos realizados estan el archivo [challenge02.sh](/linux/challenge01/challenge02.sh)
 
 ## Resultados de Monitoreo
 

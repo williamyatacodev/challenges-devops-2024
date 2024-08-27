@@ -5,7 +5,7 @@
 
 ## Ejecucion
 
-Se debe ejecutar el archivo [challenge01.sh](/linux/challenge01/challenge01.sh)
+Los pasos realizados estan el archivo [challenge01.sh](/linux/challenge01/challenge01.sh)
 Teniendo las siguientes consideraciones:
 
     $USER -> usuario de linux

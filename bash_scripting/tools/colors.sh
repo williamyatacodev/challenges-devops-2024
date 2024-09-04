@@ -10,7 +10,7 @@ PADDING="  "
 DPADDING="\t\t"
 
 # Other Colors / Status Code
-LGRAY="\033[0;37m"     # Light Gray
+LGRAY="\033[0;37m"    # Light Gray
 LRED="\033[1;31m"     # Light Red
 LGREEN="\033[1;32m"   # Light GREEN
 LBLUE="\033[1;34m"    # Light Blue

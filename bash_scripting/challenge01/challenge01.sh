@@ -25,7 +25,6 @@ checkNvm(){
         source ~/.bashrc
         export NVM_DIR="$HOME/.nvm"
         check_error "Error to install nvm"
-        echo -e "[${GREEN}DONE${RESET}]"
     fi
 }
 
@@ -42,7 +41,6 @@ checkNode(){
         curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
         apt-get install -y nodejs
         check_error "Error to install node"
-        echo -e "[${GREEN}DONE${RESET}]"
         if  ! dpkg -l | grep -q nodejs; then
             echo -e "[${LBLUE}${TIME}${RESET}] [${RED}ERROR${RESET}] Failed to install Nodejs, check manually required."
         fi
@@ -74,7 +72,6 @@ configNginx(){
 
     systemctl restart nginx
     check_error "Error to reset nginx."
-    echo -e "[${GREEN}DONE${RESET}]"
 }
 
 checkPM2(){
@@ -87,7 +84,6 @@ checkPM2(){
         echo -e "[${LBLUE}${TIME}${RESET}] [${GREEN}INFO${RESET}] Installing pm2"
         npm install -g pm2
         check_error "Error to install pm2"
-        echo -e "[${GREEN}DONE${RESET}]"
      fi
 }
 
@@ -99,7 +95,6 @@ check_dependencies_app() {
         echo -e "[${LBLUE}${TIME}${RESET}] [${GREEN}INFO${RESET}] Installing Dependencies $app"
         cd $app/ && npm install && cd ..
         check_error "Error to install dependencies of $app"
-        echo -e "[${GREEN}DONE${RESET}]"
     fi
 }
 
@@ -111,14 +106,13 @@ check_deploy_app() {
         echo -e "[${LBLUE}${TIME}${RESET}] [${GREEN}INFO${RESET}] Up $app ------->> "
         pm2 start $app/server.js --name $app
         check_error "Error to deploy app $app"
-        echo -e "[${GREEN}DONE${RESET}]"
     fi
 }
 
 deployApp(){
 
     if [ -d $ROOT_PROJECT ]; then
-        echo -e "[${LBLUE}${TIME}${RESET}] [${LGREEN}INFO${RESET}] ${GREEN}Application exists ${RESET} searching for updates"
+        echo -e "[${LBLUE}${TIME}${RESET}] [${LGREEN}INFO${RESET}] ${GREEN}Repository exists ${RESET} searching for updates"
 		sleep 1
 		cd $ROOT_PROJECT
 		git pull origin $GIT_BRANCH
@@ -149,6 +143,8 @@ deployApp(){
 
     # Save state from apps
     pm2 save
+    echo -e "[${GREEN}DONE${RESET}]"
+
 }
 
 banner

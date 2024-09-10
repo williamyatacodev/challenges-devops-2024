@@ -151,7 +151,7 @@ deployApp(){
 		git pull origin $GIT_BRANCH
         check_error "Error to update repository, check manually required"
 	else
-        echo -e "[${LBLUE}${TIME}${RESET}] [${GREEN}INFO${RESET}] Clone repository"
+        echo -e "[${LBLUE}${TIME}${RESET}] [${YELLOW}INFO${RESET}] Cloning repository"
 		git clone -b $GIT_BRANCH $GIT_PROJECT
         check_error "Error to clone repository, check manually required"
 		cd $ROOT_PROJECT

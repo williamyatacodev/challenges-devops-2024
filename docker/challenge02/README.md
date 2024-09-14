@@ -5,10 +5,9 @@
 
 ## Ejecucion
 
+Ejecutar el siguiente script [challenge02.sh](/docker/challenge02/challenge02.sh) y se desplegara el proyecto.
 
-Los pasos realizados estan el archivo [challenge02.sh](/docker/challenge02/challenge02.sh).
-
-Para ejecutar el archivo se debe dar permiso 
+Considerar dar permiso al script para ejecutarlo:
     
     chmod +x challenge02.sh
 

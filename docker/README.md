@@ -2,6 +2,14 @@
 
 Resolvemos challenges de despliegues en linux con docker
 
+## Challenge 01
+
+Este challenge fue propuesto en [Bootcamp Devops](https://bootcamp.295devops.com/docker/docker-challenge/01challenge)
+
+Tecnologias: Mongo, Docker
+W
+**Challenge 01** [Resuelto](./challenge01/README.md)
+
 
 ## Challenge 02
 

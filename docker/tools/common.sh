@@ -20,14 +20,24 @@ checkPrivileges(){
     echo "[*] start at $(date)"
     echo -e "[*] ${GREEN}WillDevelop${RESET} \n\n"
     if [ "$EUID" -ne 0 ]; then
-        echo -e "[${LBLUE}${TIME}${RESET}] [${RED}ERROR${RESET}] Oops! You must run this tools using root/superuser privileges."
+        log "ERROR" "Oops! You must run this tools using root/superuser privileges."
     exit
     fi
 }
 
+log() {
+    local level=$1
+    local message=$2
+    case $level in
+        "INFO") echo -e "${GREEN}[INFO]${RESET} $message" ;;
+        "WARN") echo -e "${YELLOW}[WARN]${RESET} $message" ;;
+        "ERROR") echo -e "${RED}[ERROR]${RESET} $message" ;;
+    esac
+}
+
 check_error() {
     if [ $? -ne 0 ]; then
-        echo -e "[${RED}ERROR${RESET}]" "$1"
+        log "ERROR" "$1"
         exit 1
     fi
 }
@@ -35,18 +45,18 @@ check_error() {
 install_package() {
     local package=$1
     if ! dpkg -l "$package" > /dev/null 2>&1; then
-        echo -e "[${LBLUE}${TIME}${RESET}] [${GREEN}INFO${RESET}] Installing $package"
+        log "WARN" "Installing $package..."
         apt-get update -qq && apt-get install -y "$package" > /dev/null 2>&1
         check_error "Error to install $package."
-        echo -e "[${GREEN}$package install successfull${RESET}]"
+        log "INFO" "$package installed successfull."
     else
-        echo -e "[${LBLUE}${TIME}${RESET}] [${LGREEN}INFO${RESET}] ${GREEN}$package${RESET} is already installed"
+        log "INFO" "$package is already install."
     fi
 }
 
 installDocker(){
     if ! command -v docker &> /dev/null; then
-        echo -e "[${LBLUE}${TIME}${RESET}] [${GREEN}INFO${RESET}] Installing docker"
+        log "WARN" "Installing docker..."
         apt-get update && apt-get install ca-certificates curl
         install -m 0755 -d /etc/apt/keyrings
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
@@ -58,8 +68,8 @@ installDocker(){
         apt-get update
         apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
         check_error "Error to install docker, check manually required"
-        echo -e "[${GREEN}docker install successfull${RESET}]"
+        log "INFO" "docker install successfull"
     else
-        echo -e "[${LBLUE}${TIME}${RESET}] [${LGREEN}INFO${RESET}] ${GREEN}docker${RESET} is already installed"
+        log "INFO" "docker is already install"
     fi
 }

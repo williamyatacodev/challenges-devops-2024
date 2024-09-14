@@ -8,6 +8,7 @@ Este challenge fue propuesto en [Bootcamp Devops](https://bootcamp.295devops.com
 
 Tecnologias: Mongo, Docker
 W
+
 **Challenge 01** [Resuelto](./challenge01/README.md)
 
 
@@ -27,3 +28,11 @@ Este challenge fue propuesto en [Bootcamp Devops](https://bootcamp.295devops.com
 Tecnologias: Docker, Mongo, Node, Express
 
 **Challenge 03** [Resuelto](./challenge03/README.md)
+
+## Challenge 04
+
+Este challenge fue propuesto en [Bootcamp Devops](https://bootcamp.295devops.com/docker/docker-challenge/04challenge/)
+
+Tecnologias: Docker, Java, Go, Postgres
+
+**Challenge 04** [Resuelto](./challenge04/README.md)

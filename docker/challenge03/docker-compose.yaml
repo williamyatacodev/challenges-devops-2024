@@ -1,7 +1,8 @@
+name: 'challenge03'
+
 services:
 
   mongo_db:
-    container_name: 295topics_mongo
     image: mongo:7.0.14
     restart: always
     ports:
@@ -15,8 +16,7 @@ services:
     networks:
       - 295topics
 
-  mongo-express:
-    container_name: 295topics_mongo_express
+  mongo_express:
     image: mongo-express:1.0.2-20-alpine3.19
     restart: on-failure
     ports:
@@ -31,7 +31,6 @@ services:
       - 295topics
 
   backend:
-    container_name: 295topics_backend
     restart: on-failure
     build:
       context: .
@@ -50,7 +49,6 @@ services:
       - 295topics
 
   frontend:
-    container_name: 295topics_frontend
     restart: on-failure
     build:
       context: .

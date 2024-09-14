@@ -34,7 +34,7 @@ deployApp(){
         cp "../$DOCKER_FILE" "$DOCKER_FILE"
         PROJECT="${PWD}/$PROJECT_ROOT"
         sed -i "s|\$PROJECT_DIR|$PROJECT|g" "$DOCKER_FILE"
-        check_error "Error create config docker compose, check manually required"
+        check_error "Error config docker compose, check manually required"
         echo -e "[${LBLUE}${TIME}${RESET}] [${GREEN}INFO${RESET}] docker compose conf successfully"
     fi
 

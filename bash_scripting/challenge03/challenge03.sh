@@ -105,7 +105,6 @@ deployApp(){
             check_error "Error to start container, check manually required"
         else
             echo -e "[${LBLUE}${TIME}${RESET}] [${LGREEN}INFO${RESET}] ${GREEN}Container $DOCKER_CONTAINER${RESET} not exists, creating"
-            pwd
             docker build -t $DOCKER_CONTAINER .
             docker run -t -d -p 5050:5050 --name $DOCKER_CONTAINER $DOCKER_CONTAINER
             check_error "Error to up container, check manually required"

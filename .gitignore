@@ -1,6 +1,3 @@
 # ignore vagrant
 **/Vagrantfile
 **/.vagrant
-
-# ignore repo 
-**/devops-static-web

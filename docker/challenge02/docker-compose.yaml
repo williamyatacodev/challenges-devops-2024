@@ -1,0 +1,10 @@
+
+services:
+  nginx:
+    container_name: bootcamp-web
+    image: nginx:1.27.1-alpine
+    ports:
+      - 9999:80
+    volumes:
+      - $PROJECT_DIR:/usr/share/nginx/html
+    restart: always

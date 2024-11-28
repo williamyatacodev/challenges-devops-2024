@@ -1,0 +1,40 @@
+name: 'challenge04'
+
+services:
+
+  db:
+    restart: always
+    image: $DOCKER_HUB_USERNAME/295words-db
+    ports:
+      - 5432:5432
+    volumes:
+      - docker_data:/var/lib/postgresql/data
+    networks:
+      - 295words
+
+  api:
+    restart: on-failure
+    image: $DOCKER_HUB_USERNAME/295words-api
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    networks:
+      - 295words
+
+  frontend:
+    restart: on-failure
+    image: $DOCKER_HUB_USERNAME/295words-frontend
+    ports:
+      - 80:80
+    depends_on:
+      - api
+    networks:
+      - 295words
+
+volumes:
+  docker_data:
+
+networks:
+  295words:
+    name: 295words_net

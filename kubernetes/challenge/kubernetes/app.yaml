@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  labels:
+    app: deploy-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+      service: svc-app
+  template:
+    metadata:
+      labels:
+        app: app
+        service: svc-app
+    spec:
+      containers:
+      - name: container-app
+        image: wyataco/295kubectl-app:$IMAGE_TAG
+        ports:
+          - name: port-api
+            containerPort: 8000

@@ -5,9 +5,11 @@ source ../tools/common.sh
 
 PROJECT_ROOT="challenge-final"
 DOCKER_CONTAINER="kubernetes_challenge"
-DOCKER_TAG_APP="v1.0.0"
+DOCKER_TAG="v1.0.0"
 DOCKER_TAG_APP="295kubectl-app"
 DOCKER_TAG_APP_CONSUMER="295kubectl-consumer"
+KUBE_NAMESPACE="wyataco"
+KUBE_FILES="deploy/app.yaml deploy/consumer.yaml"
 
 checkDockerHub(){
     echo "[*] start at $(date)"
@@ -74,7 +76,7 @@ getTagVersion() {
     local GIT_VERSION=$(git describe --tags --long --always)
     
     if [[ "$GIT_VERSION" =~ ^[0-9a-f]{7,}$ ]]; then
-        VERSION="$DOCKER_TAG_APP-$GIT_VERSION"
+        VERSION="$DOCKER_TAG-$GIT_VERSION"
     fi
 
     echo "$VERSION"
@@ -93,16 +95,51 @@ buildApp(){
     checkDockerImages
 }
 
+deployApp(){
+    echo "[*] start at $(date)"
+
+    DEPLOY_FILE="deploy"
+
+    if [ -d "$DEPLOY_FILE" ]; then
+        log "INFO" "directory deploy exists"
+    else
+        mkdir deploy
+    fi
+
+    cp -r kubernetes/*.yaml $DEPLOY_FILE/
+
+    for FILE in $KUBE_FILES; do
+        sed -i "s|\$IMAGE_TAG|$TAG_APP|g" "$FILE"
+    done
+
+    check_error "Error config kubernetes files, check manually required"
+    log "INFO" "kubernetes files conf successfully"
+
+    kubectl apply -f $DEPLOY_FILE/namespace.yaml \
+    -f $DEPLOY_FILE/app-svc.yaml \
+    -f $DEPLOY_FILE/app.yaml \
+    -f $DEPLOY_FILE/consumer.yaml \
+    -n $KUBE_NAMESPACE
+
+    kubectl get deploy,service,pod -n $KUBE_NAMESPACE
+
+    kubectl describe service/service-flask-app -n $KUBE_NAMESPACE
+
+    kubectl logs deployment/app -n $KUBE_NAMESPACE
+    kubectl logs deployment/consumer -n $KUBE_NAMESPACE
+
+    sleep 120
+
+    kubectl delete -f $DEPLOY_FILE/namespace.yaml \
+        -f $DEPLOY_FILE/app-svc.yaml \
+        -f $DEPLOY_FILE/app.yaml \
+        -f $DEPLOY_FILE/consumer.yaml \
+        -n $KUBE_NAMESPACE
+}
+
 banner
 checkPrivileges
 installDocker
 checkDockerHub "$@"
 buildApp
-
-# docker build -f Dockerfile.app -t test_app .
-# docker run -d -p 8088:8000 test_app
-# docker build -f Dockerfile.consumer -t test_consumer .
-# docker run -d -p 8089:8000 test_consumer
-
-# docker compose up -d
-# docker compose down
+deployApp

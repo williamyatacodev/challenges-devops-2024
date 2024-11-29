@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+  labels:
+    app: deploy-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: container-consumer
+        image: wyataco/295kubectl-consumer:$IMAGE_TAG
+        ports:
+          - name: port-consumer
+            containerPort: 8001

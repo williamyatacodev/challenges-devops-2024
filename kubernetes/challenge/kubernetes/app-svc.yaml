@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-flask-app
+  labels:
+    service: svc-app
+spec:
+  type: NodePort
+  ports:
+  - name: service-app
+    port: 80
+    targetPort: port-api
+  selector:
+    app: app
+    service: svc-app

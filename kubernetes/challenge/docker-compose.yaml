@@ -1,0 +1,35 @@
+
+name: 'challenge'
+
+services:
+
+  service-flask-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    container_name: challenge_app
+    restart: on-failure
+    ports:
+      - 80:8000
+    networks:
+      - challenge
+
+  consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile.consumer
+    container_name: challenge_consumer
+    restart: always
+    environment:
+      # - LOCAL=False
+      - DEV=True
+    ports:
+      - 8000:8000
+    depends_on:
+      - service-flask-app
+    networks:
+      - challenge
+
+networks:
+  challenge:
+    name: challenge_net
